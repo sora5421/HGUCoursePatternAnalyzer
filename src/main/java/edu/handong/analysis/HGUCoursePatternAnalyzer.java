@@ -5,7 +5,7 @@ import edu.handong.analysis.datamodel.Student;
 
 public class HGUCoursePatternAnalyzer {
 	
-	String[] lines = {	"1999-1, JC Nam, Java Programming",
+	private String[] lines = {	"1999-1, JC Nam, Java Programming",
 						"1999-2, JC Nam, Programming Language Theory",
 						"1999-1, JC Nam, Data Structures",
 						"2001-1, JC Nam, Database Systems",
@@ -19,10 +19,10 @@ public class HGUCoursePatternAnalyzer {
 						"2019-1, SJ Kim, Algorithm Analysis",
 						};
 
-	int numOfStudents;
-	int numOfCourses;
-	Student[] students;
-	Course[] courses;
+	private int numOfStudents;
+	private int numOfCourses;
+	private Student[] students;
+	private Course[] courses;
 	
 	/**
 	 * This method runs our analysis logic to get the list of student and course names from lines.
@@ -56,10 +56,33 @@ public class HGUCoursePatternAnalyzer {
 	private Student[] initiateStudentArrayFromLines(String[] lines) {
 		
 		// TODO: implement this method
+		students = new Student[numOfStudents];
+		Student student1;
+		int i = 0;
+		int j = 0;
+		while(true) {
+			student1 = new Student(lines[j].split(",")[1]);
+			if(j != 0) {
+				if(studentExist(students,student1)) {
+					j++;
+				}
+				else {
+					students[i] = new Student(lines[j].split(",")[1]);
+					i++;
+					j++;
+				}
+			}
+			else {
+				students[i] = new Student(lines[j].split(",")[1]);
+				i++;
+				j++;
+			}
+			if(i == numOfStudents) break;
+		}
+		return students;
 		
-		
-		return null;
-	}
+	
+}
 
 	/**
 	 * This method check if there is the same name of the second arugement in the array, students
@@ -68,11 +91,20 @@ public class HGUCoursePatternAnalyzer {
 	 * @return boolean
 	 */
 	private boolean studentExist(Student[] students, Student student) {
-		
+		int i = 0;
 		// TODO: implement this method
-
-		return false;
+		for (Student student2 : students) {
+			Student student3 = student2;
+			if(student3 == null) break;
+			if(student3.getName().contentEquals(student.getName())) {
+				i = 1;
+				break;
+			}
+		}
+		if(i == 1) return true;
+		else return false;
 	}
+
 	
 	/**
 	 * This method returns a Course array to initiate the field, courses, from lines.
@@ -82,8 +114,30 @@ public class HGUCoursePatternAnalyzer {
 	private Course[] initiateCourseArrayFromLines(String[] lines) {
 		
 		// TODO: implement this method
-		
-		return null;
+		courses = new Course[numOfCourses];
+		Course course1;
+		int i = 0;
+		int j = 0;
+		while(true) {
+			course1 = new Course(lines[j].split(",")[2]);
+			if(j != 0) {
+				if(courseExist(courses,course1)) {
+					j++;
+				}
+				else {
+					courses[i] = new Course(lines[j].split(",")[2]);
+					i++;
+					j++;
+				}
+			}
+			else {
+				courses[i] = new Course(lines[j].split(",")[2]);
+				i++;
+				j++;
+			}
+			if(i == numOfCourses) break;
+		}
+		return courses;
 	}
 
 	/**
@@ -93,10 +147,17 @@ public class HGUCoursePatternAnalyzer {
 	 * @return boolean
 	 */
 	private boolean courseExist(Course[] courses, Course course) {
-		
+		int i = 0;
 		// TODO: implement this method
-
-		return false;
+		for (Course course2 : courses){
+			if(course2 == null)break;
+			if(course2.getCourseName().contentEquals(course.getCourseName())) {
+				i = 1;
+				break;
+			}
+		}
+		if(i == 1) return true;				
+		else return false;
 	}
-
+		
 }
